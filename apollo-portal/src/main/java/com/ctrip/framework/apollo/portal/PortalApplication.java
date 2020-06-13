@@ -4,6 +4,7 @@ import com.ctrip.framework.apollo.common.ApolloCommonConfig;
 import com.ctrip.framework.apollo.openapi.PortalOpenApiConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @ComponentScan(basePackageClasses = {ApolloCommonConfig.class,
     PortalApplication.class, PortalOpenApiConfig.class})
+@EnableDiscoveryClient
 public class PortalApplication {
 
   public static void main(String[] args) throws Exception {

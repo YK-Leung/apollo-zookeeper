@@ -1,22 +1,46 @@
-eureka:
-  instance:
-    hostname: ${hostname:localhost}
-    preferIpAddress: true
-    status-page-url-path: /info
-    health-check-url-path: /health
-  server:
-    peerEurekaNodesUpdateIntervalMs: 60000
-    enableSelfPreservation: false
-  client:
-    serviceUrl:
-      # This setting will be overridden by eureka.service.url setting from ApolloConfigDB.ServerConfig or System Property
-      # see com.ctrip.framework.apollo.biz.eureka.ApolloEurekaClientConfig
-      defaultZone: http://${eureka.instance.hostname}:8080/eureka/
-    healthcheck:
-      enabled: true
-    eurekaServiceUrlPollIntervalSeconds: 60
+#eureka:
+#  instance:
+#    hostname: ${hostname:localhost}
+#    preferIpAddress: true
+#    status-page-url-path: /info
+#    health-check-url-path: /health
+#  server:
+#    peerEurekaNodesUpdateIntervalMs: 60000
+#    enableSelfPreservation: false
+#  client:
+#    serviceUrl:
+#      # This setting will be overridden by eureka.service.url setting from ApolloConfigDB.ServerConfig or System Property
+#      # see com.ctrip.framework.apollo.biz.eureka.ApolloEurekaClientConfig
+#      defaultZone: http://${eureka.instance.hostname}:8080/eureka/
+#    healthcheck:
+#      enabled: true
+#    eurekaServiceUrlPollIntervalSeconds: 60
 
+################# 监控信息 #################
+#修改访问路径  2.0之前默认是/   2.0默认是 /actuator
+#不改此配置，服务调用会有异常，可以通过这个属性值修改
+#management.endpoints.web.base-path=/actuator
+#开放所有页面节点  默认只开启了health、info两个节点
+#management.endpoints.enabled=false
+#显示健康具体信息  默认不会显示详细信息
+#management.endpoint.health.show-details=always
 management:
   health:
     status:
       order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+################# 服务注册 #################
+#注册中心，根存储路径，默认也是/service
+#是否注册
+spring:
+  cloud:
+    zookeeper:
+      discovery:
+        root: /services
+        enabled: true
+        register: true
+        instance-host: ${spring.cloud.client.ip-address}
+      connect-string: zk.bubugao.api:2181

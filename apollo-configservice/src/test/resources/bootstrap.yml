@@ -1,16 +1,33 @@
-eureka:
-  instance:
-    hostname: ${hostname:localhost}
-    preferIpAddress: true
-    status-page-url-path: /info
-    health-check-url-path: /health
-  client:
-    serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:8080/eureka/
-    healthcheck:
-      enabled: true
-      
+#eureka:
+#  instance:
+#    hostname: ${hostname:localhost}
+#    preferIpAddress: true
+#    status-page-url-path: /info
+#    health-check-url-path: /health
+#  client:
+#    serviceUrl:
+#      defaultZone: http://${eureka.instance.hostname}:8080/eureka/
+#    healthcheck:
+#      enabled: true
+
+################# 服务注册 #################
+#注册中心，根存储路径，默认也是/service
+#是否注册
+spring:
+  cloud:
+    zookeeper:
+      discovery:
+        root: /services
+        enabled: true
+        register: true
+        instance-host: ${spring.cloud.client.ip-address}
+      connect-string: zk.bubugao.api:2181
+
 management:
   health:
     status:
-      order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP 
+      order: DOWN, OUT_OF_SERVICE, UNKNOWN, UP
+  endpoints:
+    web:
+      exposure:
+        include: '*'

@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    zookeeper:
+      discovery:
+        root: /services
+        enabled: true
+        register: true
+        instance-host: ${spring.cloud.client.ip-address}
+      connect-string: zk.bubugao.api:2181
