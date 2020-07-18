@@ -21,7 +21,7 @@ spring:
         enabled: true
         register: true
         instance-host: ${spring.cloud.client.ip-address}
-      connect-string: zk.bubugao.api:2181
+      connect-string: localhost:2181
 
 management:
   health:
